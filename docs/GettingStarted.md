@@ -36,12 +36,12 @@ block { display: none; }
   display: block;
 }</style>
 <span>Platform:</span>
-<a href="" class="button-ios" onclick="display('platform', 'ios')">iOS</a>
-<a href="" class="button-android" onclick="display('platform', 'android')">Android</a>
+<a href="" data-type="platform" data-value="ios" class="block-button button-ios">iOS</a>
+<a href="" data-type="platform" data-value="android" class="block-button button-android">Android</a>
 <span>OS:</span>
-<a href="" class="button-mac" onclick="display('os', 'mac')">Mac</a>
-<a href="" class="button-linux" onclick="display('os', 'linux')">Linux</a>
-<a href="" class="button-windows" onclick="display('os', 'windows')">Windows</a>
+<a href="" data-type="os" data-value="mac" class="block-button button-mac">Mac</a>
+<a href="" data-type="os" data-value="linux" class="block-button button-linux">Linux</a>
+<a href="" data-type="os" data-value="windows" class="block-button button-windows">Windows</a>
 </div>
 
 <!-- ######### LINUX AND WINDOWS for iOS ##################### -->
@@ -786,7 +786,12 @@ for (var i = 0; i < blocks.length; ++i) {
     block.appendChild(block.nextSibling);
   }
 }
-function display(type, value) {
+var buttons = document.getElementsByClassName('block-button')
+for (var i = 0; i < buttons.length; ++i) {
+  var button = buttons[i]
+  button.onclick = display.bind(null, button.dataset.type, button.dataset.value)
+}
+function display(type, value, event) {
   var container = document.getElementsByTagName('block')[0].parentNode;
   container.className = 'display-' + type + '-' + value + ' ' +
     container.className.replace(RegExp('display-' + type + '-[a-z]+ ?'), '');
